@@ -30,6 +30,7 @@ public:
     void insert_at_Mid(int key, int data);
     void updateNode(int key, int data);
     void ReverseLL();
+    void MiddleNode();
     void deleteNode(int Key);
     void display();
 };
@@ -64,7 +65,7 @@ void linkList::insert_at_Mid(int key, int data)
     prev = head;
     current = prev->next;
 
-// if Linklist is empty
+    // if Linklist is empty
     if (head == NULL)
     {
         cout << "LinkList is empty!" << endl;
@@ -78,21 +79,23 @@ void linkList::insert_at_Mid(int key, int data)
         prev->next = NewNode;
         return;
     }
-    
-    while (current!=NULL && current->data!=key)
+
+    while (current != NULL && current->data != key)
     {
         prev = current;
         current = current->next;
     }
     // if key is not found
-    if(current==NULL){
-        cout<<"your key *"<<key<<"* Not Exist in LinkList"<<endl;
+    if (current == NULL)
+    {
+        cout << "your key *" << key << "* Not Exist in LinkList" << endl;
         delete NewNode;
         return;
     }
     NewNode->next = current;
     prev->next = NewNode;
 }
+
 // insert node at front of linklist
 void linkList::insert_at_front(int data)
 {
@@ -100,6 +103,7 @@ void linkList::insert_at_front(int data)
     NewNode->next = head;
     head = NewNode;
 }
+
 // updateNode Vaue
 void linkList::updateNode(int key, int data)
 {
@@ -118,6 +122,7 @@ void linkList::updateNode(int key, int data)
     }
     cout << key << ": Key Not found!!" << endl;
 }
+
 // Reverse linklist.
 void linkList::ReverseLL()
 {
@@ -135,6 +140,29 @@ void linkList::ReverseLL()
     }
     head = prev;
 }
+
+// Middle Node
+void linkList::MiddleNode()
+{
+    if (head == NULL)
+    {
+        cout << "LinkedList Is Empty!" << endl;
+        return;
+    }
+
+    Node* fast;
+    Node* slow;
+    fast=slow=head;
+
+    while(fast!=NULL && fast->next!=NULL)
+    {
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    cout<<"Middle Node: "<< slow->data<<endl;
+
+}
+
 // Delete node
 void linkList::deleteNode(int key)
 {
@@ -192,16 +220,18 @@ int main()
     ll.insert_at_back(23);
     ll.insert_at_back(33);
     ll.insert_at_back(43);
-    ll.insert_at_front(03);
+    //ll.insert_at_front(03);
 
-    cout << "before insert" << endl;
-    ll.display();
-    cout << endl;
+    // cout << "before insert" << endl;
+    // ll.display();
+    // cout << endl;
 
-    ll.insert_at_Mid(34, 24);
-    cout << "After insert" << endl;
-    ll.display();
-    cout << endl;
+    // ll.insert_at_Mid(34, 24);
+    // cout << "After insert" << endl;
+    // ll.display();
+    // cout << endl;
+
+    ll.MiddleNode();
 
     return 0;
 }
