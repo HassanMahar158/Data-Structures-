@@ -31,6 +31,7 @@ public:
     void updateNode(int key, int data);
     void ReverseLL();
     void MiddleNode();
+    void removeDuplicate();
     void deleteNode(int Key);
     void display();
 };
@@ -150,19 +151,79 @@ void linkList::MiddleNode()
         return;
     }
 
-    Node* fast;
-    Node* slow;
-    fast=slow=head;
+    Node *fast;
+    Node *slow;
+    fast = slow = head;
 
-    while(fast!=NULL && fast->next!=NULL)
+    while (fast != NULL && fast->next != NULL)
     {
-        slow=slow->next;
-        fast=fast->next->next;
+        slow = slow->next;
+        fast = fast->next->next;
     }
-    cout<<"Middle Node: "<< slow->data<<endl;
-
+    cout << "Middle Node: " << slow->data << endl;
 }
 
+// Remove Duplicate Nodes
+void linkList::removeDuplicate()
+{
+    int count = 0; // How many Duplicate node are?
+    int i = 0;
+    int DValue[10]; // Which Duplicate node are found
+
+    // If Linked List is Empty
+    if (head == NULL)
+    {
+        cout << "linkedList is Empty!" << endl;
+        return;
+    }
+    // if LinkedList Exist Mulitiple Nodes
+    Node *current = head;
+    while (current != NULL)
+    {
+        Node *Runner;
+        Runner = current;
+        while (Runner->next != NULL)
+        {
+
+            if (current->data == Runner->next->data)
+            {
+                DValue[i] = current->data;
+                i++;
+
+                Node *Duplicate = NULL;
+                Duplicate = Runner->next;
+
+                Runner->next = Duplicate->next;
+                delete Duplicate;
+                count++;
+            }
+            else
+            {
+                Runner = Runner->next;
+            }
+        }
+
+        current = current->next;
+    }
+
+    // If No Duplicate Node Found
+
+    if (count == 0)
+    {
+        cout << "No Duplicate Found" << endl;
+    }
+    else
+    {
+        cout << "Total " << count << " Duplicate Node Found!" << endl;
+        cout << "Duplicate Values are: ";
+        for (int j = 0; j < count; j++)
+        {
+            cout << DValue[j] << ",";
+        }
+
+        cout << endl;
+    }
+}
 // Delete node
 void linkList::deleteNode(int key)
 {
@@ -217,21 +278,23 @@ int main()
 {
     linkList ll;
     ll.insert_at_back(13);
-    ll.insert_at_back(23);
+    ll.insert_at_back(13);
     ll.insert_at_back(33);
     ll.insert_at_back(43);
-    //ll.insert_at_front(03);
+    ll.insert_at_front(03);
+    ll.insert_at_back(43);
+    ll.insert_at_back(23);
 
-    // cout << "before insert" << endl;
-    // ll.display();
-    // cout << endl;
+    cout << "before Remove Duplicate" << endl;
+    ll.display();
+    cout << endl;
 
-    // ll.insert_at_Mid(34, 24);
-    // cout << "After insert" << endl;
-    // ll.display();
-    // cout << endl;
+    ll.removeDuplicate();
+    cout << "After Remove Duplicate" << endl;
+    ll.display();
+    cout << endl;
 
-    ll.MiddleNode();
+    // ll.MiddleNode();
 
     return 0;
 }
