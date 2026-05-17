@@ -32,6 +32,7 @@ public:
     void ReverseLL();
     void MiddleNode();
     void removeDuplicate();
+    void serchNode(int key);
     void deleteNode(int Key);
     void display();
 };
@@ -60,12 +61,6 @@ void linkList::insert_at_back(int data)
 // insert node at mid of linklist
 void linkList::insert_at_Mid(int key, int data)
 {
-    Node *NewNode = new Node(data);
-    Node *prev;
-    Node *current;
-    prev = head;
-    current = prev->next;
-
     // if Linklist is empty
     if (head == NULL)
     {
@@ -73,19 +68,14 @@ void linkList::insert_at_Mid(int key, int data)
         return;
     }
 
-    // if key is at 1st node
-    if (head->data == key)
-    {
-        NewNode->next = current;
-        prev->next = NewNode;
-        return;
-    }
+    Node *NewNode = new Node(data);
+    Node *current=head;
 
     while (current != NULL && current->data != key)
     {
-        prev = current;
         current = current->next;
     }
+
     // if key is not found
     if (current == NULL)
     {
@@ -93,8 +83,9 @@ void linkList::insert_at_Mid(int key, int data)
         delete NewNode;
         return;
     }
-    NewNode->next = current;
-    prev->next = NewNode;
+
+    NewNode->next = current->next;
+    current->next = NewNode;
 }
 
 // insert node at front of linklist
@@ -250,12 +241,32 @@ void linkList::deleteNode(int key)
 
         PrevTemp = temp;
         temp = temp->next;
+
     }
 
     PrevTemp->next = temp->next;
     delete temp;
 }
 
+// Search Node
+void linkList::serchNode(int key){
+    int count=1; // how many key are found in linklist
+    if(head==NULL){
+        cout<<"Linked List is empty"<<endl;
+    }
+
+    Node* move=head;
+    while(move!=NULL && move->data!=key){
+        move=move->next;
+        count++;
+    }
+    if(move==NULL){
+        cout<<"NO key Found in this Linked List"<<endl;
+        return;
+    }
+    string array[]={"1st","2nd","3rd","4th","5th","6th"};
+    cout<<"Your Required Node: "<<key<<" is Find at "<<array[count-1]<<" Location of LinkedList"<<endl;
+}
 // display all node of linklist
 void linkList::display()
 {
@@ -274,27 +285,29 @@ void linkList::display()
     }
 }
 
+
 int main()
 {
     linkList ll;
     ll.insert_at_back(13);
-    ll.insert_at_back(13);
     ll.insert_at_back(33);
-    ll.insert_at_back(43);
+    ll.insert_at_back(23);
     ll.insert_at_front(03);
     ll.insert_at_back(43);
     ll.insert_at_back(23);
-
-    cout << "before Remove Duplicate" << endl;
-    ll.display();
-    cout << endl;
-
+    ll.insert_at_Mid(03, 04);
     ll.removeDuplicate();
-    cout << "After Remove Duplicate" << endl;
+    ll.serchNode(03);
+    ll.serchNode(04);
+    ll.serchNode(13);
+    ll.serchNode(33);
+    ll.serchNode(23);
+    ll.serchNode(43);
+
+
     ll.display();
     cout << endl;
 
-    // ll.MiddleNode();
 
     return 0;
 }

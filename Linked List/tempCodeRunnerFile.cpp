@@ -1,2 +1,6 @@
-ll.insert_at_back(43);
-    // ll.insert_at_back(23);
+if (prev == NULL)
+    // {
+    //     cout << "your key *" << key << "* Not Exist in LinkList" << endl;
+    //     delete NewNode;
+    //     return;
+    // }
